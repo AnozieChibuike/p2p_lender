@@ -41,7 +41,7 @@ class Chatbot:
         )
 
         bot_response = response['choices'][0]['message']["content"]
-        collection.update_one({"username": self.username}, {"$push": {"conversation_history": {"role":"system","content":bot_response}}})
+        collection.update_one({"username": self.username}, {"$push": {"conversation_history": {"role":"assistant","content":bot_response}}})
         return bot_response
 
 
