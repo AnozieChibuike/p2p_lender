@@ -1,11 +1,11 @@
 from flask import Flask, request, jsonify
 from datetime import datetime, timedelta
 import bson
-from main import app
-# app = Flask(__name__)
+# from main import app
+app = Flask(__name__)
 now = datetime.now
 loanRequests = [{
-    'id':bson.ObjectId(),
+    'id': str(bson.ObjectId()),
     'UserId':2,
     'LoanAmount': 12000,
     'InterestRate': 16,
@@ -33,7 +33,7 @@ users = [
 ]
 
 lendRequests = [{
-    'id':bson.ObjectId(),
+    'id':str(bson.ObjectId()),
     'UserId':1,
     'LendAmount': 12000,
     'InterestRate': 16,
@@ -46,7 +46,7 @@ lendRequests = [{
 }]
 
 MergedLoans = [{
-    'id':bson.ObjectId(),
+    'id':str(bson.ObjectId()),
     'BorrowerId':2,
     'LenderId': 1,
     'LoanAmount': 12000,
@@ -59,9 +59,9 @@ MergedLoans = [{
 
 @app.route('/loan/borrow',methods=['POST','GET'])
 def new_loan():
-    if request.methods == 'POST':
+    if request.method == 'POST':
         data = request.json.get
-        id = bson.ObjectId()
+        id = str(bson.ObjectId())
         UserId = data('BorrowerId')
         LoanAmount = data('LoanAmount')
         Interest = data('Interest')
@@ -95,7 +95,7 @@ def new_loan():
 def new_lend():
     if request.method == 'POST':
         data = request.json.get
-        id = bson.ObjectId()
+        id = str(bson.ObjectId())
         UserId = data('LenderId')
         LendAmount = data('LendAmount')
         Interest = data('Interest')
@@ -125,7 +125,7 @@ def new_lend():
 def mergedloan():
     if request.method == 'POST':
         data = request.json.get
-        id= bson.ObjectId()
+        id= str(bson.ObjectId())
         BorrowerId=data('BorrowerId')
         LenderId=data('LenderId')
         LoanAmount=data('LoanAmount')
@@ -156,7 +156,7 @@ def mergedloan():
             return jsonify({'data':MergedLoan,'merged': False,'reason': 'Lender has low Balance'})
     return jsonify({'data': MergedLoans})
 
-@app.route('/loan/user',methods=['POST','GET','UPDATE'])
+@app.route('/loan/user',methods=['POST','GET','PUT'])
 def user():
     global users
     if request.method == 'POST':
@@ -168,7 +168,7 @@ def user():
             return jsonify({'error': 'User exists'})
         users.append({'UserId':UserId,'Balance':Balance})
         return jsonify({'data': users})
-    if request.method == 'UPDATE':
+    if request.method == 'PUT':
         data = request.json.get
         UserId = data('UserId')
         Balance = data('Balance')
@@ -181,8 +181,8 @@ def user():
         return jsonify({'data': users,'message':'updated'})
     return jsonify({'data': users})
 
-# if __name__ == '__main__':
-#     app.run()
+if __name__ == '__main__':
+    app.run()
 
 
 
