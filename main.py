@@ -4,6 +4,9 @@ from pymongo.mongo_client import MongoClient
 import dotenv
 import os
 from unratedwriting import typewrite
+from flask_cors import CORS
+
+CORS(app)
 
 dotenv.load_dotenv()
 uri = os.getenv('mongo_db_uri')
