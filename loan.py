@@ -156,6 +156,7 @@ def mergedloan():
 
 @app.route('/loan/user',methods=['POST','GET','UPDATE'])
 def user():
+    global users
     if request.method == 'POST':
         data = request.json.get
         UserId = data('UserId')
@@ -171,12 +172,12 @@ def user():
         Balance = data('Balance')
         li = [i['UserId']  for i in users]
         if UserId not in users:
-            return jsonify('error': 'User does not exist')
-        for i,d enumerate(users):
+            return jsonify({'error': 'User does not exist'})
+        for i,d in enumerate(users):
             if d['UserId'] == UserId:
                 users[i]['Balance'] = Balance
-        return jsonify('data': users,'message':'updated')
-    return jsonify('data': users)
+        return jsonify({'data': users,'message':'updated'})
+    return jsonify({'data': users})
 
 
 
