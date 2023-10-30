@@ -51,7 +51,6 @@ MergedLoans = [{
     'LenderId': 1,
     'LoanAmount': 12000,
     'InterestRatePayable': 16,
-    'InterestRatePayable': 16,
     'Active': True,
     'MergedTime':  now() + timedelta(minutes=2),
     'DueDate': now() + timedelta(weeks=4),
@@ -136,7 +135,7 @@ def mergedloan():
 
         for i in users:
             if i['UserId'] == LenderId:
-                if users[users.index]['Amount'] > LoanAmount:
+                if users[users.index(i)]['Amount'] > LoanAmount:
                     Active = True
 
         MergedLoan = {
