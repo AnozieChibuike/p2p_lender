@@ -101,7 +101,7 @@ def new_lend():
         Active = False
         RequestTime = data('RequestTime')
         LoanTimeFrame = now() + timedelta(weeks=data('LoanTimeFrame'))
-        MatchedTime = data('MatchedTime') or now()
+        MatchedTime = data('MatchedTime') or None
         MatchedUserID = data('MatchedUserID')
         DueDate = None
         LendRequest = {
@@ -133,9 +133,9 @@ def mergedloan():
         MergedTime=  now() + timedelta()
         DueDate= data('DueDate')
 
-        for i in users:
+        for k,i in enumerate(users):
             if i['UserId'] == LenderId:
-                if users[users.index(i)]['Amount'] > LoanAmount:
+                if users[k]['Balance'] > LoanAmount:
                     Active = True
 
         MergedLoan = {

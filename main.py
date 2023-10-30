@@ -75,7 +75,7 @@ def bot():
 
     return json.dumps({"bot_response": bot_response}), 201
 
-from . import loan
+# from . import loan
 
 if __name__ == "__main__":
     typewrite("Server spinning up.., I pledge my loyalty to the emperor (v1.0)")
