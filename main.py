@@ -1,3 +1,4 @@
+import json
 import openai
 from flask import Flask, request, jsonify
 from pymongo.mongo_client import MongoClient
@@ -44,7 +45,7 @@ class Chatbot:
             messages=self.conversation_history
         )
 
-        bot_response = response['choices'][0]['message']["content"]
+        bot_response = response['choices'][0]['message']["content"].replace('\n',' ')
         collection.update_one({"username": self.username}, {"$push": {"conversation_history": {"role":"assistant","content":bot_response}}})
         return bot_response
 
@@ -62,7 +63,7 @@ def bot():
     if user is None:
         collection.insert_one({"username": username, "conversation_history":[{"role":"system","content":"You are a Microfinance platform that handle p2p lending(both parties can negotiate the interest to time of the loan), microfinance services"},
                                                                              {"role":"user","content":"Who are you?"},
-                                                                             {"role":"assistant","content":"We are a Microfinance platform that handle p2p lending and other microfinance services"}
+                                                       {"role":"assistant","content":"We are a Microfinance platform that handle p2p lending and other microfinance services"}
             ]
             })
     user = collection.find_one({'username': username})
@@ -72,9 +73,9 @@ def bot():
     robot = Chatbot(username,history,message)
     bot_response = robot.process_user_message()
 
-    return jsonify({"bot_response": bot_response}), 201
+    return json.dumps({"bot_response": bot_response}), 201
 
-
+from . import loan
 
 if __name__ == "__main__":
     typewrite("Server spinning up.., I pledge my loyalty to the emperor (v1.0)")
