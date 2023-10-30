@@ -6,7 +6,7 @@ import os
 from unratedwriting import typewrite
 from flask_cors import CORS
 
-CORS(app)
+
 
 dotenv.load_dotenv()
 uri = os.getenv('mongo_db_uri')
@@ -14,6 +14,7 @@ openai.api_key = os.getenv('open_ai_api_key')
 
 app = Flask(__name__)
 
+CORS(app)
 # Create a new client and connect to the server
 client = MongoClient(uri)
 
