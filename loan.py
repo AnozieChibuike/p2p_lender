@@ -116,7 +116,7 @@ def new_lend():
             'DueDate': DueDate,
         }
         lendRequests.append(LendRequest)
-        return jsonify('LenderData': LendRequest)
+        return jsonify({'LenderData': LendRequest})
     return jsonify({'data': lendRequests})
 
 @app.route('/loan/MergeLoan',methods=['POST','GET'])
@@ -155,16 +155,16 @@ def mergedloan():
     return jsonify({'data': MergedLoans})
 
 @app.route('/loan/user',methods=['POST','GET','UPDATE'])
-def user()
+def user():
     if request.method == 'POST':
         data = request.json.get
         UserId = data('UserId')
         Balance = data('Balance')
-        li = [i['UserId']  for i in users]
+        li = [i['UserId'] for i in users]
         if UserId in users:
-            return jsonify('error': 'User exists')
+            return jsonify({'error': 'User exists'})
         users.append({'UserId':UserId,'Balance':Balance})
-        return jsonify('data': users)
+        return jsonify({'data': users})
     if request.method == 'UPDATE':
         data = request.json.get
         UserId = data('UserId')
