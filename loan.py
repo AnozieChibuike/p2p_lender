@@ -1,7 +1,8 @@
-from flask import request,jsonify
+from flask import Flask, request, jsonify
 from datetime import datetime, timedelta
-from main import app
 import bson
+from main import app
+# app = Flask(__name__)
 now = datetime.now
 loanRequests = [{
     'id':bson.ObjectId(),
@@ -9,7 +10,7 @@ loanRequests = [{
     'LoanAmount': 12000,
     'InterestRate': 16,
     'Active': True,
-    'RequestTime': now,
+    'RequestTime': now(),
     'LoanTimeFrame': '4 weeks',
     'MatchedTime':  now() + timedelta(minutes=2),
     'MatchedUserId': 1,
@@ -37,11 +38,11 @@ lendRequests = [{
     'LendAmount': 12000,
     'InterestRate': 16,
     'Active': True,
-    'LendTime': now + timedelta(minutes=2),
+    'LendTime': now() + timedelta(minutes=2),
     'ProposedLendTimeFrame': '4 weeks',
-    'MatchedTime':  now + timedelta(minutes=2),
+    'MatchedTime':  now() + timedelta(minutes=2),
     'MatchedUserId': 2,
-    'DueDate': now + timedelta(weeks=4),
+    'DueDate': now() + timedelta(weeks=4),
 }]
 
 MergedLoans = [{
@@ -50,9 +51,10 @@ MergedLoans = [{
     'LenderId': 1,
     'LoanAmount': 12000,
     'InterestRatePayable': 16,
+    'InterestRatePayable': 16,
     'Active': True,
-    'MergedTime':  now + timedelta(minutes=2),
-    'DueDate': now + timedelta(weeks=4),
+    'MergedTime':  now() + timedelta(minutes=2),
+    'DueDate': now() + timedelta(weeks=4),
 }]
 
 @app.route('/loan/borrow',methods=['POST','GET'])
@@ -129,7 +131,7 @@ def mergedloan():
         LoanAmount=data('LoanAmount')
         InterestRatePayable=data('Interest')
         Active=False
-        MergedTime=  now + timedelta()
+        MergedTime=  now() + timedelta()
         DueDate= data('DueDate')
 
         for i in users:
@@ -145,7 +147,7 @@ def mergedloan():
             'InterestRatePayable': InterestRatePayable,
             'Active': True,
             'MergedTime':  MergedTime,
-            'DueDate': now + timedelta(weeks=DueDate),
+            'DueDate': now() + timedelta(weeks=DueDate),
         }
         if Active:
             MergedLoans.append(MergedLoan)
@@ -179,8 +181,8 @@ def user():
         return jsonify({'data': users,'message':'updated'})
     return jsonify({'data': users})
 
-
-
+# if __name__ == '__main__':
+#     app.run()
 
 
 
