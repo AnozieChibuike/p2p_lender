@@ -164,7 +164,7 @@ def user():
         UserId = data('UserId')
         Balance = data('Balance')
         li = [i['UserId'] for i in users]
-        if UserId in users:
+        if UserId in li:
             return jsonify({'error': 'User exists'})
         users.append({'UserId':UserId,'Balance':Balance})
         return jsonify({'data': users})
@@ -173,7 +173,7 @@ def user():
         UserId = data('UserId')
         Balance = data('Balance')
         li = [i['UserId']  for i in users]
-        if UserId not in users:
+        if UserId not in li:
             return jsonify({'error': 'User does not exist'})
         for i,d in enumerate(users):
             if d['UserId'] == UserId:
