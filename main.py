@@ -6,11 +6,8 @@ import os
 from unratedwriting import typewrite
 
 dotenv.load_dotenv()
-uri = os.getenv('mongo_db_uri') or "\
-
-
-openai.api_key = os.getenv('open_ai_api_key') or "\
-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"
+uri = os.getenv('mongo_db_uri')
+openai.api_key = os.getenv('open_ai_api_key')
 
 app = Flask(__name__)
 
