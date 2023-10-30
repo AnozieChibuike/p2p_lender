@@ -7,7 +7,7 @@ from unratedwriting import typewrite
 
 dotenv.load_dotenv()
 uri = os.getenv('mongo_db_uri') or "\
-mongodb+srv://admin:admin@cluster0.aale39j.mongodb.net/?retryWrites=true&w=majority"
+
 
 openai.api_key = os.getenv('open_ai_api_key') or "\
 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"
