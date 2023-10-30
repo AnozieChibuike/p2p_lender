@@ -56,8 +56,7 @@ def bot():
 
     user = collection.find_one({'username': username})
     if user is None:
-        collection.insert_one({"username": username, "conversation_history":[{"role":"user","content":"Who are you?"},
-            {"role":"system","content":"We are a Microfinance platform that handle p2p lending, microfinance services...."}
+        collection.insert_one({"username": username, "conversation_history":[{"role":"system","content":"You are a Microfinance platform that handle p2p lending(both parties can negotiate the interest to time of the loan), microfinance services"}
             ]
             })
     user = collection.find_one({'username': username})
