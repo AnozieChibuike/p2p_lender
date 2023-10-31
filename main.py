@@ -45,7 +45,7 @@ class Chatbot:
             messages=self.conversation_history
         )
 
-        bot_response = response['choices'][0]['message']["content"].replace('\n',' ')
+        bot_response = response['choices'][0]['message']["content"]
         collection.update_one({"username": self.username}, {"$push": {"conversation_history": {"role":"assistant","content":bot_response}}})
         return bot_response
 
@@ -61,11 +61,7 @@ def bot():
 
     user = collection.find_one({'username': username})
     if user is None:
-        collection.insert_one({"username": username, "conversation_history":[{"role":"system","content":"You are a Microfinance platform that handle p2p lending(both parties can negotiate the interest to time of the loan), microfinance services"},
-                                                                             {"role":"user","content":"Who are you?"},
-                                                       {"role":"assistant","content":"We are a Microfinance platform that handle p2p lending and other microfinance services"}
-            ]
-            })
+        collection.insert_one({"username": username, "conversation_history":[{"role":"system","content":"You are to immerse yourself into another useful AI model known to be a customer service bot, you are owned by Cash Mingle and it is a company that offers personal finance management and a key feature for CashMingle is the peer to peer lending they offer in which users can lend and borrow from themselves and they negotiate the timeframe of the loan and even the interest added between themselves and give themselves the loan"},})
     user = collection.find_one({'username': username})
     username = user['username']
     history = user['conversation_history']
